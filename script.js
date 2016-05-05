@@ -8,7 +8,7 @@ function Bouncer() {
     var y = canvas.height/2;
     var r = 30;
 
-    function draw() {
+    this.draw = function() {
       // fill in background rectangle
       c.fillStyle="white"
       c.fillRect(0, 0, canvas.width, canvas.height)
@@ -22,12 +22,11 @@ function Bouncer() {
       c.lineWidth = 5
       c.stroke()
     }
-    draw()
 
     var now = (new Date) / 1000;
     var h = 100
     var v = 100
-    function update() {
+    this.update = function() {
       var newNow = (new Date) / 1000
       var delta = newNow - now
       now = newNow
@@ -51,8 +50,13 @@ function Bouncer() {
       }
       // new stuff ends here
       
-      draw()
       setTimeout(update, 20)
     }
+}
+
+var ball = new Bouncer;
+function update() {
+    ball.update();
+    ball.draw();
 }
 setTimeout(update, 20)
