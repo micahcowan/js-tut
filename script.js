@@ -38,13 +38,9 @@ function Bouncer() {
       c.stroke()
     }
 
-    var now = (new Date) / 1000;
     var h = randRange(10,500)
     var v = randRange(10,500)
-    this.update = function() {
-      var newNow = (new Date) / 1000
-      var delta = newNow - now
-      now = newNow
+    this.update = function(delta) {
       
       x = x + h*delta
       y += v*delta
@@ -70,14 +66,19 @@ function Bouncer() {
 }
 
 var balls = [ new Bouncer ];
+var now = (new Date) / 1000;
 function update() {
     // fill in background rectangle
     c.fillStyle="white"
     c.fillRect(0, 0, canvas.width, canvas.height)
 
+    var newNow = (new Date) / 1000
+    var delta = newNow - now
+    now = newNow
+
     for (var i=0; i != balls.length; ++i) {
         var ball = balls[i];
-        ball.update();
+        ball.update(delta);
         ball.draw();
     }
 }
