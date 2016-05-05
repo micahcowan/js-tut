@@ -2,30 +2,45 @@ var canvas = document.getElementById("canvas")
 canvas.style.border = "solid 4px black"
 var c = canvas.getContext("2d")
 
+function randRange(min, max) {
+    return min + Math.floor(Math.random() * (max+1 - min));
+}
+
+function randColor() {
+    //   color like: rgb(255, 127, 20)
+    return "rgb("
+        + randRange(0,255) + ", " // red
+        + randRange(0,255) + ", " // green
+        + randRange(0,255) + ")"  // blue
+}
+
 function Bouncer() {
     // set up circle location
-    var x = canvas.width/2;
-    var y = canvas.height/2;
-    var r = 30;
+    var minR = 10
+    var maxR = 50
+    var r = randRange(minR, maxR)
+    var x = randRange(r, canvas.width - r)
+    var y = randRange(r, canvas.height - r)
+
+    // random colors, too
+    var fillColor = randColor()
+    var strokeColor = randColor()
+    var lineWidth = randRange(1,10)
 
     this.draw = function() {
-      // fill in background rectangle
-      c.fillStyle="white"
-      c.fillRect(0, 0, canvas.width, canvas.height)
-
       // draw a circle
       c.beginPath()
       c.arc(x, y, r, 0, 2 * Math.PI)
-      c.fillStyle="navy"
+      c.fillStyle = fillColor
       c.fill()
-      c.strokeStyle="lime"
-      c.lineWidth = 5
+      c.strokeStyle = strokeColor
+      c.lineWidth = lineWidth
       c.stroke()
     }
 
     var now = (new Date) / 1000;
-    var h = 100
-    var v = 100
+    var h = randRange(10,500)
+    var v = randRange(10,500)
     this.update = function() {
       var newNow = (new Date) / 1000
       var delta = newNow - now
@@ -57,6 +72,11 @@ function Bouncer() {
 var ball = new Bouncer;
 function update() {
     ball.update();
+
+    // fill in background rectangle
+    c.fillStyle="white"
+    c.fillRect(0, 0, canvas.width, canvas.height)
+
     ball.draw();
 }
 setTimeout(update, 20)
