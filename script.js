@@ -69,14 +69,21 @@ function Bouncer() {
     }
 }
 
-var ball = new Bouncer;
+var balls = [ new Bouncer ];
 function update() {
-    ball.update();
-
     // fill in background rectangle
     c.fillStyle="white"
     c.fillRect(0, 0, canvas.width, canvas.height)
 
-    ball.draw();
+    for (var i=0; i != balls.length; ++i) {
+        var ball = balls[i];
+        ball.update();
+        ball.draw();
+    }
+}
+
+function addBall() {
+    balls.push(new Bouncer)
 }
 setTimeout(update, 20)
+addEventListener('click', addBall)
